@@ -11,14 +11,14 @@ from decouple import config
 import pymssql
 
 
-def connect_postgresql(hostname, dbname, username, password):
+def connect_postgresql(hostname, dbname, username, password, port):
     try:
         conn_post = conn2.connect(
         dbname=dbname,
         user=username,
         password=password,
         host=hostname,
-        port=5432)
+        port=port)
         return conn_post
     except Exception as e:
         print("Ocurrió un error al conectar a PostgreSQL: ", e)
@@ -57,10 +57,11 @@ def connect_sqlserver(hostname, dbname, username, password):
 def get_connection():
     try:
         connection = connect_postgresql(
-            config('HOST_NAME_PSQL'),
-            config('DATABASE_PSQL'),
-            config('USER_NAME_PSQL'),
-            config('PASSWORD_PSQL')
+            config('POSTGRESQL_ADDON_HOST'),
+            config('POSTGRESQL_ADDON_DB'),
+            config('POSTGRESQL_ADDON_USER'),
+            config('POSTGRESQL_ADDON_PASSWORD'),
+            config('POSTGRESQL_ADDON_PORT')
         )
         return connection
     except Exception as ex:
