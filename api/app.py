@@ -2,7 +2,7 @@
 """
 Created on Fri Mar  3 15:56:16 2023
 
-@author: Mario
+@author: Mario Salazar
 """
 
 from flask import Flask, jsonify, render_template, request, send_from_directory
