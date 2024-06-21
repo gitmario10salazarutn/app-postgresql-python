@@ -58,7 +58,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Update an existent pet in the store",
+                    "description": "Update an existent language in the store",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -120,7 +120,7 @@
                 "description": "Create or add new Programming Language!",
                 "operationId": "createLanguage",
                 "requestBody": {
-                    "description": "Update an existent pet in the store",
+                    "description": "Create an existent language",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -180,7 +180,7 @@
                 ],
                 "summary": "Finds All Programming languages ❌✅",
                 "description": "Multiple status values can be provided with comma separated strings",
-                "operationId": "findPetsByStatus",
+                "operationId": "getLanguages",
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -340,67 +340,6 @@
                     }
                 },
                 "security": []
-            }
-        },
-        "/pet/{petId}/uploadImage": {
-            "post": {
-                "tags": [
-                    "pet"
-                ],
-                "summary": "uploads an image",
-                "description": "",
-                "operationId": "uploadFile",
-                "parameters": [
-                    {
-                        "name": "petId",
-                        "in": "path",
-                        "description": "ID of pet to update",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    },
-                    {
-                        "name": "additionalMetadata",
-                        "in": "query",
-                        "description": "Additional Metadata",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/octet-stream": {
-                            "schema": {
-                                "type": "string",
-                                "format": "binary"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "petstore_auth": [
-                            "write:pets",
-                            "read:pets"
-                        ]
-                    }
-                ]
             }
         },
         "/create_user": {
@@ -1092,21 +1031,6 @@
             }
         },
         "requestBodies": {
-            "Pet": {
-                "description": "Pet object that needs to be added to the store",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/Pet"
-                        }
-                    },
-                    "application/xml": {
-                        "schema": {
-                            "$ref": "#/components/schemas/Pet"
-                        }
-                    }
-                }
-            },
             "UserArray": {
                 "description": "List of user object",
                 "content": {
