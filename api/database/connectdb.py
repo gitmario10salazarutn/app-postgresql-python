@@ -5,7 +5,6 @@ Created on Fri Mar  3 15:53:32 2023
 @author: Mario
 """
 
-import pyodbc
 import psycopg2 as conn2
 from decouple import config
 

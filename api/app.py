@@ -15,21 +15,15 @@ from decouple import config
 import os
 import sys
 
-
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from models.models import Model as Model
-
-
 
 app = Flask(__name__)
 CORS(app)
 #CORS(app, resources={r"/users/*": {"origins": "*"}})
 CORS(app, resources={r"/users/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE"], "allow_headers": ["Content-Type"]}})
 
-
 login_manager = LoginManager(app)
-
 
 @login_manager.user_loader
 def load_user(id):
@@ -47,13 +41,10 @@ def Page_Not_Found(error):
 def send_static(path):
     return send_from_directory(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static')))
 
-
 # print(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static')))
 """
 SWAGGER_URL = "/api/docs"
 API_URL = "/static/swagger.json"
-
-
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL, API_URL, config={"app_name": "My API"}, custom_css_url="/static/css/style.css"
 )
@@ -67,14 +58,9 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     custom_css_url="/static/swagger-ui/swagger-ui.css",
     custom_js_url="/static/swagger-ui/swagger-ui-bundle.js"
 )
-
 """
 
-
 #app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
-
-
-
 
 @app.route('/users/delete_user/<id>', methods=['DELETE'])
 @cross_origin()
