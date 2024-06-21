@@ -43,6 +43,11 @@ def Page_Not_Found(error):
     return '<h1>Page Not Found</h1>', 404
 
 
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static')))
+
+
 # print(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static')))
 """
 SWAGGER_URL = "/api/docs"
