@@ -9,7 +9,6 @@ from flask import Flask, jsonify, render_template, request
 from flask_login import login_required, login_user, LoginManager, logout_user
 from flask_cors import CORS, cross_origin
 from flask_swagger_ui import get_swaggerui_blueprint
-from models.models import Model as Model
 import jwt
 import json
 from decouple import config
@@ -19,6 +18,8 @@ import sys
 
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from models.models import Model as Model
+
 
 
 app = Flask(__name__)
