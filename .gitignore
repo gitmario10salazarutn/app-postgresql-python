@@ -1,3 +1,4 @@
 app-psql/
 test/
 .env
+.vercel

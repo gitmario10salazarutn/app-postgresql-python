@@ -5,7 +5,7 @@ Created on Fri Mar  3 15:56:16 2023
 @author: Mario
 """
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 from flask_login import login_required, login_user, LoginManager, logout_user
 from flask_cors import CORS, cross_origin
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -538,7 +538,8 @@ def index():
 
 @app.route('/swagger/docs')
 def swagger():
-    return render_template('swagger.html', title = "My API")
+    domain = request.host_url + "users"
+    return render_template('swagger.html', title = "My API", host_url=domain)
 
 if __name__ == '__main__':
     app.register_error_handler(404, Page_Not_Found)
