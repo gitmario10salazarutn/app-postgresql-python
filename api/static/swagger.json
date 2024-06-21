@@ -20,6 +20,9 @@
     "servers": [
         {
             "url": "https://app-postgresql-python.vercel.app/users"
+        },
+        {
+            "url": "http://localhost:5000/users"
         }
     ],
     "tags": [
