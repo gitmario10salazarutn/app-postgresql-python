@@ -534,7 +534,7 @@
                         "name": "id_user",
                         "in": "path",
                         "description": "The user name for login",
-                        "required": false,
+                        "required": true,
                         "schema": {
                             "type": "string",
                             "format": "email"
@@ -544,7 +544,7 @@
                         "name": "password",
                         "in": "path",
                         "description": "The password for login in clear text",
-                        "required": false,
+                        "required": true,
                         "schema": {
                             "type": "string",
                             "format": "password"
@@ -620,12 +620,30 @@
                         "description": "name that need to be set enable",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "email"
                         }
                     }
                 ],
                 "requestBody": {
-                    "description": "Update an existent user in the store"
+                    "description": "JSON object containing data to update user enable status",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "New enable status of the user"
+                                    }
+                                },
+                                "required": [
+                                    "enabled"
+                                ]
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "default": {
