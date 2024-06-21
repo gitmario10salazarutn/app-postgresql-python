@@ -27,11 +27,11 @@ def connect_postgresql(hostname, dbname, username, password, port):
 def get_connection():
     try:
         connection = connect_postgresql(
-            config('POSTGRESQL_ADDON_HOST'),
-            config('POSTGRESQL_ADDON_DB'),
-            config('POSTGRESQL_ADDON_USER'),
-            config('POSTGRESQL_ADDON_PASSWORD'),
-            config('POSTGRESQL_ADDON_PORT')
+            config('HOSTNAME_PSQL_LOC'),
+            config('DATABASE_PSQL_LOC'),
+            config('USERNAME_PSQL_LOC'),
+            config('PASSWORD_PSQL_LOC'),
+            config('PORT_POSTGRES')
         )
         return connection
     except Exception as ex:

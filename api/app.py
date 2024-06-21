@@ -8,10 +8,18 @@ Created on Fri Mar  3 15:56:16 2023
 from flask import Flask, jsonify, render_template, request
 from flask_login import login_required, login_user, LoginManager, logout_user
 from flask_cors import CORS, cross_origin
+from flask_swagger_ui import get_swaggerui_blueprint
 from models import models as model
 import jwt
 import json
 from decouple import config
+import os
+import sys
+
+
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 
 app = Flask(__name__)
 CORS(app)
@@ -32,6 +40,34 @@ def load_user(id):
 
 def Page_Not_Found(error):
     return '<h1>Page Not Found</h1>', 404
+
+
+# print(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static')))
+"""
+SWAGGER_URL = "/api/docs"
+API_URL = "/static/swagger.json"
+
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL, API_URL, config={"app_name": "My API"}, custom_css_url="/static/css/style.css"
+)
+"""
+
+"""
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={"app_name": "My API"},
+    custom_css_url="/static/swagger-ui/swagger-ui.css",
+    custom_js_url="/static/swagger-ui/swagger-ui-bundle.js"
+)
+
+"""
+
+
+#app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
+
 
 
 @app.route('/users/delete_user/<id>', methods=['DELETE'])
@@ -388,12 +424,12 @@ def get_userbyemail(email):
         return jsonify({'message': 'Error {0}'.format(ex)}), 500
 
 
-@app.route('/users/login_user', methods=['GET', 'POST'])
+@app.route('/users/login_user/<email>/<password>', methods=['GET', 'POST'])
 @cross_origin()
-def login_user():
+def login_user(email, password):
     try:
-        data = request.json
-        user = model.Model.login_user(data=data)
+        print(email, password)
+        user = model.Model.login_user(email=email, password=password)
         if user == 2 or user == -1:
             return jsonify({
                 'message': 'Username or password are incorrect!',
@@ -405,7 +441,7 @@ def login_user():
                 'token': None
             })
         else:
-            a = load_user(data['id_user'])
+            a = load_user(email)
             encode_jwt = jwt.encode(a, config('SECRET_KEY_ENCODE'), algorithm="HS256")
             return jsonify({
                 'message': 'Login Successfully!',
@@ -491,8 +527,12 @@ def update_user(id):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    domain = request.host_url + "swagger/docs"
+    return render_template('index.html', domain=domain)
 
+@app.route('/swagger/docs')
+def swagger():
+    return render_template('swagger.html', title = "My API")
 
 if __name__ == '__main__':
     app.register_error_handler(404, Page_Not_Found)

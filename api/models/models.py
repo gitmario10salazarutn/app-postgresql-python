@@ -385,14 +385,13 @@ class Model:
             raise Exception(ex)
 
     @classmethod
-    def login_user(self, data):
+    def login_user(self, email, password):
         try:
-            user = self.get_userbyemail(
-                data['id_user']) or self.get_userbyusername(data['id_user'])
+            user = self.get_userbyemail(email) or self.get_userbyusername(email)
             if user:
-                if check_password_hash(user.get('user')['password'], data['password']) and user.get('user')['user_state']:
+                if check_password_hash(user.get('user')['password'], password) and user.get('user')['user_state']:
                     return user
-                elif check_password_hash(user.get('user')['password'], data['password']) is False:
+                elif check_password_hash(user.get('user')['password'], password) is False:
                     return 2
                 elif user.get('user')['user_state'] is False:
                     return 1
