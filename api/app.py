@@ -9,7 +9,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_login import login_required, login_user, LoginManager, logout_user
 from flask_cors import CORS, cross_origin
 from flask_swagger_ui import get_swaggerui_blueprint
-from models import models as model
+from models.models import Model as Model
 import jwt
 import json
 from decouple import config
@@ -33,8 +33,8 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def load_user(id):
     #print(id)
-    user = model.Model.get_userbyusername(
-        username=id) or model.Model.get_userbyemail(email=id)
+    user = Model.get_userbyusername(
+        username=id) or Model.get_userbyemail(email=id)
     return user
 
 
@@ -75,7 +75,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 def delete_user(id):
     try:
         data = request.json
-        row_affect = model.Model.delete_user(id=id, data=data)
+        row_affect = Model.delete_user(id=id, data=data)
         if row_affect == 1:
             return jsonify({
                 'message': 'Delete user Successfully!',
@@ -99,7 +99,7 @@ def delete_user(id):
 @cross_origin()
 def delete_language(id):
     try:
-        row_affect = model.Model.delete_language(id=id)
+        row_affect = Model.delete_language(id=id)
         if row_affect == 1:
             return jsonify({
                 'message': 'Delete language Successfully!',
@@ -118,7 +118,7 @@ def delete_language(id):
 @cross_origin()
 def setenable_user(id):
     try:
-        row_affect = model.Model.setenable_user(id=id)
+        row_affect = Model.setenable_user(id=id)
         if row_affect == 1:
             return jsonify({
                 'message': 'Change user state Successfully!',
@@ -137,7 +137,7 @@ def setenable_user(id):
 @cross_origin()
 def get_users():
     try:
-        users = model.Model.get_users()
+        users = Model.get_users()
         if users is None:
             return [None]
         else:
@@ -150,7 +150,7 @@ def get_users():
 @cross_origin()
 def get_languages():
     try:
-        languages = model.Model.get_languages()
+        languages = Model.get_languages()
         if languages is None:
             return [None]
         else:
@@ -163,7 +163,7 @@ def get_languages():
 @cross_origin()
 def get_languagebyuser(username):
     try:
-        language = model.Model.get_languagesbyuser(username=username)
+        language = Model.get_languagesbyuser(username=username)
         if language:
             return jsonify({
                 'message': 'Languages found Successfully!',
@@ -182,7 +182,7 @@ def get_languagebyuser(username):
 @cross_origin()
 def get_educationbyid(id):
     try:
-        eduaction = model.Model.get_educationbyid(id=id)
+        eduaction = Model.get_educationbyid(id=id)
         if eduaction:
             return jsonify({
                 'message': 'Education found Successfully!',
@@ -201,7 +201,7 @@ def get_educationbyid(id):
 @cross_origin()
 def get_educationbyuser(id):
     try:
-        eduaction = model.Model.get_educationbyuser(username=id)
+        eduaction = Model.get_educationbyuser(username=id)
         if eduaction:
             return jsonify({
                 'message': 'Education found Successfully!!',
@@ -221,7 +221,7 @@ def get_educationbyuser(id):
 def create_education():
     try:
         data = request.json
-        education = model.Model.create_education(data)
+        education = Model.create_education(data)
         if education is None:
             return jsonify({'message': 'Insert education failed!', 'token': None}), 404
         else:
@@ -238,7 +238,7 @@ def create_education():
 def update_education(id):
     try:
         data = request.json
-        education = model.Model.update_education(id=id, data=data)
+        education = Model.update_education(id=id, data=data)
         if education is None:
             return jsonify({'message': 'Education not found!', 'token': None}), 404
         elif education == 0:
@@ -257,7 +257,7 @@ def update_education(id):
 @cross_origin()
 def delete_education(id):
     try:
-        row_affect = model.Model.delete_education(id=id)
+        row_affect = Model.delete_education(id=id)
         if row_affect == 1:
             return jsonify({
                 'message': 'Delete education Successfully!',
@@ -276,7 +276,7 @@ def delete_education(id):
 @cross_origin()
 def get_genders():
     try:
-        genders = model.Model.get_genders()
+        genders = Model.get_genders()
         if genders is None:
             return [None]
         else:
@@ -289,7 +289,7 @@ def get_genders():
 @cross_origin()
 def get_languagebyid(id):
     try:
-        language = model.Model.get_languagebyid(id=id)
+        language = Model.get_languagebyid(id=id)
         if language:
             return jsonify({
                 'message': 'Language found Successfully!',
@@ -309,7 +309,7 @@ def get_languagebyid(id):
 def create_language():
     try:
         data = request.json
-        language = model.Model.create_language(data)
+        language = Model.create_language(data)
         if language is None:
             return jsonify({'message': 'Insert language failed!', 'token': None}), 404
         elif language == -1:
@@ -331,7 +331,7 @@ def create_language():
 def update_languagelearn(id):
     try:
         data = request.json
-        language = model.Model.update_languagelearn(id=id, data=data)
+        language = Model.update_languagelearn(id=id, data=data)
         if language is None:
             return jsonify({'message': 'Language not found!', 'token': None}), 404
         elif language == 0:
@@ -350,7 +350,7 @@ def update_languagelearn(id):
 @cross_origin()
 def get_knowledgelevels():
     try:
-        kl = model.Model.get_knowledgwlevels()
+        kl = Model.get_knowledgwlevels()
         if kl is None:
             return [None]
         else:
@@ -363,7 +363,7 @@ def get_knowledgelevels():
 @cross_origin()
 def get_LanguagesProgramming():
     try:
-        kl = model.Model.get_LanguagesProgramming()
+        kl = Model.get_LanguagesProgramming()
         if kl is None:
             return [None]
         else:
@@ -376,7 +376,7 @@ def get_LanguagesProgramming():
 @cross_origin()
 def get_rols():
     try:
-        rols = model.Model.get_rols()
+        rols = Model.get_rols()
         if rols is None:
             return [None]
         else:
@@ -389,7 +389,7 @@ def get_rols():
 @cross_origin()
 def get_userbyusername(username):
     try:
-        user = model.Model.get_userbyusername(username=username)
+        user = Model.get_userbyusername(username=username)
         if user:
             return jsonify({
                 'message': 'User found Successfully!',
@@ -409,7 +409,7 @@ def get_userbyusername(username):
 #@login_required
 def get_userbyemail(email):
     try:
-        user = model.Model.get_userbyemail(email=email)
+        user = Model.get_userbyemail(email=email)
         if user:
             return jsonify({
                 'message': 'User found Successfully!',
@@ -429,7 +429,7 @@ def get_userbyemail(email):
 def login_user(email, password):
     try:
         print(email, password)
-        user = model.Model.login_user(email=email, password=password)
+        user = Model.login_user(email=email, password=password)
         if user == 2 or user == -1:
             return jsonify({
                 'message': 'Username or password are incorrect!',
@@ -456,7 +456,7 @@ def login_user(email, password):
 def change_password(id):
     try:
         data = request.json
-        row = model.Model.change_password(id=id, data=data)
+        row = Model.change_password(id=id, data=data)
         if row == 1:
             return jsonify({'message': 'Change password',
                             'token': 1})
@@ -485,7 +485,7 @@ def change_password(id):
 def create_user():
     try:
         data = request.json
-        usuario = model.Model.create_user(data)
+        usuario = Model.create_user(data)
         if usuario is None:
             return jsonify({'message': 'Data not found!', 'token': None}), 404
         elif usuario == -1:
@@ -507,7 +507,7 @@ def create_user():
 def update_user(id):
     try:
         data = request.json
-        user = model.Model.update_user(data=data, id_user=id)
+        user = Model.update_user(data=data, id_user=id)
         #print(user)
         if user is None:
             return jsonify({'message': 'Data not found!', 'token': None}), 404
