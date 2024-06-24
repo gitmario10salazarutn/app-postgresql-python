@@ -12,6 +12,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 import jwt
 import json
 from decouple import config
+import tempfile
 import os
 import sys
 
@@ -522,17 +523,19 @@ def index():
     domain = request.host_url + "swagger/docs"
     return render_template('index.html', domain=domain)
 
+static_folder = os.path.join(os.path.dirname(__file__), 'static')
+
 @app.route('/swagger/docs')
 def swagger():
     domain = request.host_url + "users"
-    json_file_path = os.path.join(app.static_folder, 'swagger.json')
-    with open(json_file_path, 'r', encoding='utf-8') as file:
+    json_file_path = os.path.join(tempfile.gettempdir(), 'swagger.json')
+    static_json_file_path = os.path.join(static_folder, 'swagger.json')
+    with open(static_json_file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
-        (data['servers'][0])['url']=""+domain
-        print((data['servers'][0])['url'])
+        data['servers'][0]['url'] = domain
     with open(json_file_path, 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
-    return render_template('swagger.html', title = "API Python PostgreSQL", host_url=domain)
+    return render_template('swagger.html', title="API Python PostgreSQL", host_url=domain)
 
 if __name__ == '__main__':
     app.register_error_handler(404, Page_Not_Found)
