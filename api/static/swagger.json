@@ -19,7 +19,7 @@
     },
     "servers": [
         {
-            "url": "http://192.168.0.107:5000/users"
+            "url": "http://127.0.0.1:5000/users"
         },
         {
             "url": "https://app-postgresql-python.vercel.app/users"
