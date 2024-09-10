@@ -434,7 +434,8 @@ def login_user(email, password):
             })
         else:
             a = load_user(email)
-            encode_jwt = jwt.encode(a, config('SECRET_KEY_ENCODE'), algorithm="HS256")
+            #encode_jwt = jwt.encode(a, config('SECRET_KEY_ENCODE'), algorithm="HS256")
+            encode_jwt = jwt.encode(a, 'secret-key', algorithm="HS256")
             return jsonify({
                 'message': 'Login Successfully!',
                 'token': json.dumps(encode_jwt)

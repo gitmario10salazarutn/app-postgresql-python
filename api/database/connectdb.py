@@ -26,10 +26,10 @@ def connect_postgresql(hostname, dbname, username, password, port):
 def get_connection():
     try:
         connection = connect_postgresql(
-            config('HOSTNAME_PSQL_AWS'),
-            config('DATABASE_PSQL_AWS'),
-            config('USERNAME_PSQL_AWS'),
-            config('PASSWORD_PSQL_AWS'),
+            config('HOSTNAME_PSQL_AWS_LOCAL'),
+            config('DATABASE_PSQL_AWS_LOCAL'),
+            config('USERNAME_PSQL_AWS_LOCAL'),
+            config('PASSWORD_PSQL_AWS_LOCAL'),
             config('PORT_POSTGRES')
         )
         return connection
